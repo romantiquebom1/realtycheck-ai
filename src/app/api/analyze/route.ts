@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     const buffer = Buffer.from(arrayBuffer);
 
     // Parse PDF using pdf2json
-    const text = await new Promise<string>((resolve, reject) => {
+    let text = await new Promise<string>((resolve, reject) => {
       // @ts-ignore
       const pdfParser = new PDFParser(null, 1); // 1 = text parsing only
       
@@ -45,6 +45,22 @@ export async function POST(req: NextRequest) {
       pdfParser.parseBuffer(buffer);
     });
 
+    // --- [전처리] 등기부 하단 안내 문구 및 노이즈 제거 ---
+    const noisePatterns = [
+      /기록사항 없는 갑구, 을구는 '기록사항 없음'으로 표시함/g,
+      /실선으로 그어진 부분은 말소사항을 표시함/g,
+      /증명서는 컬러 또는 흑백으로 출력 가능함/g,
+      /본 등기사항증명서는 열람용이므로 출력하신 등기사항증명서는 법적인 효력이 없습니다/g,
+      /열람일시\s*:\s*\d{4}년\d{2}월\d{2}일/g,
+      /--- 이 하 여 백 ---/g,
+      /관할등기소\s+.*등기국/g
+    ];
+
+    noisePatterns.forEach(pattern => {
+      text = text.replace(pattern, "");
+    });
+    // --------------------------------------------------
+
     // Validate document type - must be a 등기사항전부증명서
     if (!text.includes('등기사항전부증명서') && !text.includes('등 기 사 항 전 부 증 명 서')) {
       return NextResponse.json({ 
@@ -54,48 +70,23 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
 
-    // DEMO 모드: OPENAI_API_KEY가 없으면 더미 응답을 반환 (Vercel 배포 시 시연용)
+    // DEMO 모드: OPENAI_API_KEY가 없으면 더미 응답을 반환
     if (!process.env.OPENAI_API_KEY) {
-      // 인위적 지연 시간 (추론 중 로딩 애니메이션 시연)
       await new Promise((resolve) => setTimeout(resolve, 3500));
       return NextResponse.json({
         success: true,
         data: {
-          documentDate: "2024-03-12",
+          documentDate: new Date().toISOString().split('T')[0],
           propertyAddress: "⚠️ [샘플 모드] API 키 설정이 필요합니다",
-          riskLevel: "상",
+          riskLevel: "중",
           issues: [
             { 
               type: "error", 
               section: "중요 안내",
-              title: "현재 샘플 모드로 작동 중입니다", 
-              description: "클라우드플레어 설정에서 OPENAI_API_KEY가 정상적으로 등록되지 않았습니다. 실제 등기부 분석을 위해서는 환경 변수 설정이 필요합니다. 현재 보시는 결과는 시스템 점검용 예시 데이터입니다.", 
+              title: "현재 샘플 모드(데모)로 작동 중입니다", 
+              description: "클라우드플레어 설정에 **OPENAI_API_KEY**가 아직 반영되지 않았습니다. 현재 보시는 분석 결과는 실제 입력하신 문서의 내용이 아닌, 시스템 작동 확인용 **가짜 데이터**입니다.\n\n[해결 방법]\n1. 클라우드플레어 Settings > Environment variables > Production 에 키를 넣었는지 확인하세요.\n2. 키를 넣은 후 반드시 'Deployments' 탭에서 **재배포(Retry deployment)**를 해야 실제 분석이 시작됩니다.", 
               matchedText: "API_KEY_MISSING", 
-              details: ["설정 확인: Cloudflare Pages > Settings > Environment variables"] 
-            },
-            { 
-              type: "warning", 
-              section: "을구",
-              title: "근저당권 설정 확인", 
-              description: "집주인이 집을 담보로 은행에서 돈을 빌린 내역이 있습니다. 잔금 치르실 때 갚는 조건인지 꼭 확인하세요. 지연이자는 1년분에 한정하지 않고 최고액에 포함되는 이상 모두 담보됩니다. 동시이행이 필요합니다.\n\n[임차인인 경우] 선순위 근저당권 때문에 경매 넙어갈 시 보증금을 전액 보호받지 못할 수 있습니다. 잔금일 전액 상환/말소 조건을 특약에 넣으세요.\n[매수자인 경우] 매매잔금으로 은행 빚을 갚고 근저당권을 말소하는 법무사 동시이행 절차를 밟아야 안전합니다.",
-              matchedText: "근저당권설정", 
-              details: ["채권자: 국민은행", "채권최고액: 1억 2천만 원"] 
-            },
-            { 
-              type: "safe", 
-              section: "갑구",
-              title: "가압류 내역 없음", 
-              description: "갑구에 가압류, 가처분 등 복잡한 소유권 제한 내역이 발견되지 않아 비교적 깔끔한 상태입니다. 일반적인 소유권 이전 절차대로 진행 가능합니다.",
-              matchedText: "", 
-              details: [] 
-            },
-            { 
-              type: "safe", 
-              section: "을구",
-              title: "을구 특이사항 없음", 
-              description: "을구에 근저당권이나 전세권 등 소유권 이외의 권리 관계가 없습니다. 빚이 없는 깨끗한 부동산입니다.",
-              matchedText: "", 
-              details: [] 
+              details: ["클라우드플레어 대시보드에서 설정을 확인해 주세요."] 
             }
           ]
         }
