@@ -62,16 +62,16 @@ export async function POST(req: NextRequest) {
         success: true,
         data: {
           documentDate: "2024-03-12",
-          propertyAddress: "서울특별시 강남구 테헤란로 123, 101동 202호",
+          propertyAddress: "⚠️ [샘플 모드] API 키 설정이 필요합니다",
           riskLevel: "상",
           issues: [
             { 
               type: "error", 
-              section: "갑구",
-              title: "가등기 설정 확인", 
-              description: "이 집은 주인이 바뀔 수 있는 위험한 등기가 걸려있어요. 보증금을 지키기 어려울 수 있습니다. 추후 가등기권자가 본등기를 경료하면 물권변동의 효력이 발생하여 소유권을 상실하게 됩니다. 특별한 주의가 필요합니다.\n\n[임차인인 경우] 본등기가 실행되면 기존 임대차 계약이 대항력을 잃을 가능성이 크므로, 가급적 이 집은 피하는 것이 좋습니다.\n[매수자인 경우] 매도인과 협의하여 잔금 지급 시 가등기를 확실하게 말소하는 조건으로만 계약해야 합니다.", 
-              matchedText: "소유권이전청구권가등기", 
-              details: ["채권자: 김아무개", "설정일: 2023-01-01"] 
+              section: "중요 안내",
+              title: "현재 샘플 모드로 작동 중입니다", 
+              description: "클라우드플레어 설정에서 OPENAI_API_KEY가 정상적으로 등록되지 않았습니다. 실제 등기부 분석을 위해서는 환경 변수 설정이 필요합니다. 현재 보시는 결과는 시스템 점검용 예시 데이터입니다.", 
+              matchedText: "API_KEY_MISSING", 
+              details: ["설정 확인: Cloudflare Pages > Settings > Environment variables"] 
             },
             { 
               type: "warning", 
