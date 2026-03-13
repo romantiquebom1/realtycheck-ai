@@ -801,7 +801,7 @@ export default function Home() {
                   </div>
 
                   {/* Quick Nav Summary */}
-                  <div className="mb-6">
+                  <div>
                     <div className="flex items-center gap-2 mb-2">
                       <h3 className="text-sm font-bold text-neutral-500 uppercase tracking-wider">빠른 요약 ({result.issues.length}건)</h3>
                       <div className="relative group">
@@ -888,9 +888,6 @@ export default function Home() {
                       );
                     })}
                   </div>
-
-                  {/* AdSlot: In-Feed Ad - Completely invisible until loaded */}
-                  <div id="adsense-infeed-slot" className="w-full"></div>
 
                   {/* Sticky Detail View */}
                   <div className="flex-1 relative">
