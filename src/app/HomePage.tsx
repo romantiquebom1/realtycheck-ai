@@ -451,10 +451,6 @@ export default function Home() {
               exit={{ opacity: 0, y: -10 }}
               className="w-full h-full flex flex-col items-center justify-center p-6 bg-transparent relative"
             >
-              {/* Desktop Side Ad Margins - Ensuring space for Side Rails */}
-              <div className="hidden xl:block absolute left-4 top-1/2 -translate-y-1/2 w-40 h-[600px] border border-dashed border-neutral-300/30 rounded-xl pointer-events-none flex items-center justify-center text-[10px] text-neutral-400 font-bold uppercase tracking-widest whitespace-nowrap -rotate-90">Ad Space</div>
-              <div className="hidden xl:block absolute right-4 top-1/2 -translate-y-1/2 w-40 h-[600px] border border-dashed border-neutral-300/30 rounded-xl pointer-events-none flex items-center justify-center text-[10px] text-neutral-400 font-bold uppercase tracking-widest whitespace-nowrap rotate-90">Ad Space</div>
-
               <div className="max-w-2xl w-full flex flex-col items-center z-10">
                 <div className="flex flex-col items-center justify-center gap-1 md:gap-1.5 mb-10 w-full">
                   <div className="relative inline-flex flex-col items-center">
@@ -893,14 +889,12 @@ export default function Home() {
                     })}
                   </div>
 
-                  {/* AdSlot: In-Feed Ad between summary and detail */}
-                  <div className="my-6 py-4 border-y border-neutral-100 dark:border-neutral-800 flex flex-col items-center justify-center bg-neutral-50/30 dark:bg-neutral-900/30 rounded-xl">
-                    <div className="text-[10px] font-bold text-neutral-400 mb-2 tracking-widest uppercase">Sponsored</div>
-                    <div id="adsense-infeed-slot" className="w-full min-h-[100px] flex items-center justify-center text-neutral-400 text-xs italic">
-                    {/* The actual AdSense tag will automatically fill this via Auto Ads or manually placed unit */}
-                    공간 확보 중: 애드센스 인피드 광고 영역
-                    </div>
+                  {/* AdSlot: In-Feed Ad between summary and detail - Transparentized for better UI */}
+                  <div className="my-4 w-full h-px bg-neutral-100 dark:bg-neutral-800/50"></div>
+                  <div id="adsense-infeed-slot" className="w-full min-h-[50px] flex items-center justify-center">
+                    {/* The actual AdSense tag will automatically fill this */}
                   </div>
+                  <div className="mb-6 w-full h-px bg-neutral-100 dark:bg-neutral-800/50"></div>
 
                   {/* Sticky Detail View */}
                   <div className="flex-1 relative">
