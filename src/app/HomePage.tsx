@@ -118,12 +118,17 @@ export default function Home() {
       } else {
         alert(data.message || data.error || "분석에 실패했습니다.");
         setResult(null);
-        setStep("result");
+        setStep("idle");
+        setFile(null);
+        setFileUrl(null);
       }
     } catch (error) {
       console.error(error);
       alert("서버 오류가 발생했습니다.");
-      if (!handled) setStep("result");
+      setResult(null);
+      setStep("idle");
+      setFile(null);
+      setFileUrl(null);
     }
   };
 
