@@ -889,12 +889,8 @@ export default function Home() {
                     })}
                   </div>
 
-                  {/* AdSlot: In-Feed Ad between summary and detail - Transparentized for better UI */}
-                  <div className="my-4 w-full h-px bg-neutral-100 dark:bg-neutral-800/50"></div>
-                  <div id="adsense-infeed-slot" className="w-full min-h-[50px] flex items-center justify-center">
-                    {/* The actual AdSense tag will automatically fill this */}
-                  </div>
-                  <div className="mb-6 w-full h-px bg-neutral-100 dark:bg-neutral-800/50"></div>
+                  {/* AdSlot: In-Feed Ad - Completely invisible until loaded */}
+                  <div id="adsense-infeed-slot" className="w-full"></div>
 
                   {/* Sticky Detail View */}
                   <div className="flex-1 relative">
