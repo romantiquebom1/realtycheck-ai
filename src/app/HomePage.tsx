@@ -441,7 +441,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col w-full h-[calc(100vh-64px)] overflow-hidden relative">
+      <main className="flex-1 flex flex-col w-full h-[calc(100vh-64px-40px)] overflow-hidden relative">
         <AnimatePresence mode="wait">
           {step === "idle" && (
             <motion.div 
@@ -979,6 +979,12 @@ export default function Home() {
           )}
         </AnimatePresence>
       </main>
+
+      <footer className="h-10 flex items-center justify-center shrink-0 border-t border-neutral-200/30 dark:border-neutral-800/30 bg-white/50 dark:bg-black/50 backdrop-blur-sm z-10">
+        <p className="text-[10px] md:text-xs text-neutral-400 dark:text-neutral-500 font-medium tracking-tight">
+          © {new Date().getFullYear()} mmfinsights All rights reserved.
+        </p>
+      </footer>
     </div>
   );
 }
