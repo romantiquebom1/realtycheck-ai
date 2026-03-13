@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "RealtyCheck AI - 10초 만에 끝나는 등기부등본 분석",
     description: "어려운 등기부등본, AI가 핵심 위험만 콕 짚어 알려드립니다. 전세사기 예방 필수 서비스.",
-    url: "https://realtycheck-ai.vercel.app", // 추후 실제 도메인으로 변경 필요
+    url: "https://realtycheck.mmfinsights.com",
     siteName: "RealtyCheck AI",
     images: [
       {
