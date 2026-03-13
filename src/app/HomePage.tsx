@@ -8,6 +8,7 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
 import InteractiveBackground from "./components/InteractiveBackground";
+import AdUnit from "./components/AdUnit";
 
 // Set up the worker for react-pdf
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -450,8 +451,18 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               className="w-full h-full flex flex-col items-center justify-center p-6 bg-transparent relative"
-            >
-              <div className="max-w-2xl w-full flex flex-col items-center z-10">
+          >
+            {/* Sidebar Ads for Desktop */}
+            <div className="hidden xl:block absolute left-4 top-1/2 -translate-y-1/2 w-[160px] h-[600px] z-10">
+              <AdUnit slot="7234248297" format="auto" style={{ display: "block", height: "600px" }} />
+              <p className="text-[10px] text-neutral-400 text-center mt-2 font-bold tracking-widest opacity-30">ADVERTISEMENT</p>
+            </div>
+            <div className="hidden xl:block absolute right-4 top-1/2 -translate-y-1/2 w-[160px] h-[600px] z-10">
+              <AdUnit slot="7234248297" format="auto" style={{ display: "block", height: "600px" }} />
+              <p className="text-[10px] text-neutral-400 text-center mt-2 font-bold tracking-widest opacity-30">ADVERTISEMENT</p>
+            </div>
+
+            <div className="max-w-2xl w-full flex flex-col items-center z-10">
                 <div className="flex flex-col items-center justify-center gap-1 md:gap-1.5 mb-10 w-full">
                   <div className="relative inline-flex flex-col items-center">
                     <div className="text-lg md:text-2xl font-bold tracking-tight text-neutral-700 dark:text-neutral-200 text-center uppercase mb-0.5">
@@ -887,6 +898,12 @@ export default function Home() {
                         </div>
                       );
                     })}
+                  </div>
+
+                  {/* Analysis Page In-feed Ad */}
+                  <div className="my-6">
+                    <AdUnit slot="7234248297" format="auto" className="rounded-2xl border border-neutral-100 dark:border-neutral-800 p-4 bg-neutral-50 dark:bg-neutral-900/50" />
+                    <p className="text-[9px] text-neutral-400 text-center mt-2 font-bold tracking-widest opacity-30 uppercase">광고 (위험 분석 학습에 활용됩니다)</p>
                   </div>
 
                   {/* Sticky Detail View */}
